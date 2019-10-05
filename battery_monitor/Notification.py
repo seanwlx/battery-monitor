@@ -60,17 +60,13 @@ class Notification:
             except ValueError:
                 self.low_battery = 30
             try:
-                self.first_custom_warning = int(self.config['settings']['first_custom_warning'])
+                self.custom_charge_warning = int(self.config['settings']['custom_charge_warning'])
             except ValueError:
-                self.first_custom_warning = -1
+                self.custom_charge_warning = -1
             try:
-                self.second_custom_warning = int(self.config['settings']['second_custom_warning'])
+                self.custom_warning = int(self.config['settings']['custom_warning'])
             except ValueError:
-                self.second_custom_warning = -2
-            try:
-                self.third_custom_warning = int(self.config['settings']['third_custom_warning'])
-            except ValueError:
-                self.third_custom_warning = -3
+                self.custom_warning = -1
             try:
                 self.notification_stability = int(self.config['settings']['notification_stability'])
             except ValueError:
@@ -79,9 +75,8 @@ class Notification:
             print('Config file is missing or not readable. Using default configurations.')
             self.critical_battery = 10
             self.low_battery = 30
-            self.first_custom_warning = -1
-            self.second_custom_warning = -2
-            self.third_custom_warning = -3
+            self.custom_charge_warning = -1
+            self.custom_warning = -1
             self.notification_stability = 5
 
     def show_notification(self, type: str, battery_percentage: int,
@@ -133,32 +128,25 @@ class Notification:
 
                     return "low_battery"
 
-                elif (percentage <= self.third_custom_warning and
-                      self.last_notification != "third_custom_warning"):
-                    self.last_notification = "third_custom_warning"
-                    self.show_notification(type="third_custom_warning",
+                elif (percentage <= self.custom_warning and
+                      self.last_notification != "custom_warning"):
+                    self.last_notification = "custom_warning"
+                    self.show_notification(type="custom_warning",
                                            battery_percentage=percentage,
                                            remaining_time=remaining)
 
-                    return "third_custom_warning"
-
-                elif (percentage <= self.second_custom_warning and
-                      self.last_notification != "second_custom_warning"):
-                    self.last_notification = "second_custom_warning"
-                    self.show_notification(type="second_custom_warning",
+                    return "custom_warning"
+        elif state == 'charging':
+                if (percentage != self.last_percentage and
+                    remaining != "discharging at zero rate - will never fully discharge"):
+                    self.last_percentage = percentage
+                    if percentage >= self.custom_charge_warning:
+                        self.last_notification = "custom_charge_warning"
+                        self.show_notification(type="custom_charge_warning",
                                            battery_percentage=percentage,
                                            remaining_time=remaining)
 
-                    return "second_custom_warning"
-
-                elif (percentage <= self.first_custom_warning and
-                      self.last_notification != "first_custom_warning"):
-                    self.last_notification = "first_custom_warning"
-                    self.show_notification(type="first_custom_warning",
-                                           battery_percentage=percentage,
-                                           remaining_time=remaining)
-
-                    return "first_custom_warning"
+                    return "custom_charge_warning"
         else:
             if state != self.last_notification and remaining != "discharging at zero rate - will never fully discharge":
                 self.last_notification = state

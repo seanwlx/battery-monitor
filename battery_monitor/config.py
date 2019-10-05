@@ -18,12 +18,11 @@ ICONS = {
     "charging": "charging.png",
     "discharging": "discharging.png",
     "full":  "full-charge.png",
+    "custom_charge_warning": "charging.png",
     "unknown":  "not-charging.png",
     "low_battery": "low-battery.png",
     "critical_battery": "critical-battery.png",
-    "first_custom_warning": "discharging.png",
-    "second_custom_warning": "discharging.png",
-    "third_custom_warning": "discharging.png",
+    "custom_warning": "discharging.png",
 }
 
 for key in ICONS:
@@ -32,7 +31,7 @@ for key in ICONS:
 MESSAGES = {
     "success": (
         u"Battery Monitor",
-        u"Cheers! Your battery is being monitored now."
+        u"Battery Monitor started"
     ),
 
     "fail": (
@@ -57,7 +56,7 @@ MESSAGES = {
 
     "full": (
         u"Fully Charged",
-        u"{battery_percentage} % Remaining"
+        u"{battery_percentage} %"
     ),
 
     "unknown": (
@@ -75,18 +74,13 @@ MESSAGES = {
         u"Only {battery_percentage} %, {remaining_time}"
     ),
 
-    "first_custom_warning": (
-        u"First Custom Warning",
-        u"Now {battery_percentage} %, {remaining_time}"
+    "custom_charge_warning": (
+        u"Custom Charge Warning",
+        u"Charged to {battery_percentage} %"
     ),
 
-    "second_custom_warning": (
-        u"Second Custom Warning",
-        u"Now {battery_percentage} %, {remaining_time}"
-    ),
-
-    "third_custom_warning": (
-        u"Third Custom Warning",
+    "custom_warning": (
+        u"Custom Warning",
         u"Now {battery_percentage} %, {remaining_time}"
     ),
 }

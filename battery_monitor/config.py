@@ -36,7 +36,7 @@ MESSAGES = {
 
     "fail": (
         u"Battery Monitor",
-        u"Alas! Battery is not yet present!"
+        u"Battery is not present!"
     ),
 
     "acpi": (
@@ -60,7 +60,7 @@ MESSAGES = {
     ),
 
     "unknown": (
-        u"Fully Charged",
+        u"Battery Monitor",
         u"{battery_percentage} % Remaining"
     ),
 
